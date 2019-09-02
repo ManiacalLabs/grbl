@@ -1,0 +1,43 @@
+language: c
+sudo: false
+cache:
+  directories:
+    - ~/arduino_ide
+    - ~/.arduino15/packages/
+git:
+  depth: false
+  quiet: true
+# found here https://stackoverflow.com/questions/28510001/
+before_install:
+  - ARD_VER="1.8.9"
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_1.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :1 -ac -screen 0 1280x1024x16"
+  - sleep 5
+  - export DISPLAY=:1.0
+  - echo "Downloading version $ARD_VER of the Arduino IDE..."
+  - wget http://downloads.arduino.cc/arduino-$ARD_VER-linux64.tar.xz
+  - echo "Extracting the Arduino IDE..."
+  - tar xf arduino-$ARD_VER-linux64.tar.xz
+  - echo "Moving Arduino IDE..."
+  - sudo mv arduino-$ARD_VER /usr/local/share/arduino
+  - echo "Linking Arduino IDE..."
+  - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
+  - echo "Removing Arduino IDE ver $ARD_VER tar that was downloaded..."
+  - rm arduino-$ARD_VER-linux64.tar.xz
+
+script:
+  - chmod +x ./build.sh
+  - ./build.sh
+
+deploy:
+  provider: pages
+  local_dir: ./build/release/
+  target_branch: builds
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  on:
+    branch: travis
+
+branches:
+  only:
+  - travis
