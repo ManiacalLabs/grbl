@@ -1,0 +1,3 @@
+arduino:avr:uno
+arduino:avr:nano:cpu=atmega328
+arduino:avr:nano:cpu=atmega328old

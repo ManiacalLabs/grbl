@@ -22,7 +22,7 @@ do
     cp -r ./grbl/* "${BASE_CODE_DIR}/$cfg_name/grbl/"
     cp -f ${f} "${BASE_CODE_DIR}/$cfg_name/grbl/config.h"
 
-    arduino --verify --board arduino:avr:uno --pref build.path="${BASE_BUILD_DIR}/$cfg_name" "${BASE_CODE_DIR}/$cfg_name/grbl/grbl.ino"
+    arduino --verify --board arduino:avr:nano:cpu=atmega328 --pref build.path="${BASE_BUILD_DIR}/$cfg_name" "${BASE_CODE_DIR}/$cfg_name/grbl/grbl.ino"
 
     cp "${BASE_BUILD_DIR}/$cfg_name/grbl.ino.hex" "${BASE_RELEASE_DIR}/$cfg_name.hex"
 done
