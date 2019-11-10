@@ -40,4 +40,4 @@ deploy:
 
 branches:
   only:
-  - travis
+  - master
