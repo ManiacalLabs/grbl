@@ -30,11 +30,11 @@ script:
 
 deploy:
   provider: pages
-  local_dir: ./build/release/
+  local_dir: ./dist/
   target_branch: builds
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  keep_history: true
+  keep_history: false
   on:
     branch: master
 
